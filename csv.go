@@ -90,7 +90,7 @@ func csvMain(_ *cobra.Command, args []string) error {
 			}
 		}
 		// Remove the "*/vendor/" prefix from the library name for conciseness.
-		if err := writer.Write([]string{unvendor(lib.Name()), licenseURL, licenseName}); err != nil {
+		if err := writer.Write([]string{unvendor(lib.Name()), lib.PackageVersion, licenseURL, licenseName}); err != nil {
 			return err
 		}
 	}

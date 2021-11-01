@@ -28,13 +28,11 @@ import (
 	"golang.org/x/tools/go/packages"
 )
 
-var (
-	// TODO(RJPercival): Support replacing "master" with Go Module version
-	repoPathPrefixes = map[string]string{
-		"github.com":    "blob/master/",
-		"bitbucket.org": "src/master/",
-	}
-)
+// TODO(RJPercival): Support replacing "master" with Go Module version
+var repoPathPrefixes = map[string]string{
+	"github.com":    "blob/master/",
+	"bitbucket.org": "src/master/",
+}
 
 // Library is a collection of packages covered by the same license file.
 type Library struct {
@@ -43,6 +41,9 @@ type Library struct {
 	// Packages contains import paths for Go packages in this library.
 	// It may not be the complete set of all packages in the library.
 	Packages []string
+
+	// PackageVersion
+	PackageVersion string
 }
 
 // PackagesError aggregates all Packages[].Errors into a single error.
@@ -119,17 +120,25 @@ func Libraries(ctx context.Context, classifier Classifier, importPaths ...string
 
 	var libraries []*Library
 	for licensePath, pkgs := range pkgsByLicense {
+		// extract package version
+		pkgVer := "Unknown"
+		tmp := strings.Split(pkgs[0].GoFiles[0], "@")
+		if len(tmp) > 1 {
+			pkgVer = strings.Split(tmp[1], "/")[0]
+		}
 		if licensePath == "" {
 			// No license for these packages - return each one as a separate library.
 			for _, p := range pkgs {
 				libraries = append(libraries, &Library{
-					Packages: []string{p.PkgPath},
+					Packages:       []string{p.PkgPath},
+					PackageVersion: pkgVer,
 				})
 			}
 			continue
 		}
 		lib := &Library{
-			LicensePath: licensePath,
+			LicensePath:    licensePath,
+			PackageVersion: pkgVer,
 		}
 		for _, pkg := range pkgs {
 			lib.Packages = append(lib.Packages, pkg.PkgPath)
