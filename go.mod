@@ -3,7 +3,7 @@ module github.com/google/go-licenses
 go 1.16
 
 require (
-	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
+	github.com/golang/glog v1.1.1
 	github.com/google/go-cmp v0.3.1
 	github.com/google/licenseclassifier v0.0.0-20210722185704-3043a050f148
 	github.com/otiai10/copy v1.6.0
