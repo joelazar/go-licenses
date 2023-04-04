@@ -8,8 +8,7 @@ require (
 	github.com/google/licenseclassifier v0.0.0-20210722185704-3043a050f148
 	github.com/otiai10/copy v1.6.0
 	github.com/sergi/go-diff v1.2.0 // indirect
-	github.com/spf13/cobra v0.0.5
-	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/spf13/cobra v1.7.0
 	golang.org/x/crypto v0.0.0-20191117063200-497ca9f6d64f // indirect
 	golang.org/x/net v0.0.0-20191119073136-fc4aabc6c914 // indirect
 	golang.org/x/sys v0.0.0-20191119060738-e882bf8e40c2 // indirect
